@@ -65,9 +65,9 @@ body {
     display: block;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    width: 100px;
-    height: 60px;
+    width: 55%;
+    height: 10vh;
+    margin: 20px 0 10px 30px;
 }
 
 .navbar-links {
@@ -133,11 +133,16 @@ body {
     margin-left: auto;
     gap: 5px;
 }
+.head{
+    padding-left: 6%;
+    color: #7A3015;
+}
 .profile-admin img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    border: 2px solid #7A3015;
 }
 
 .profile-admin button {
@@ -163,6 +168,10 @@ body {
     padding-left: 16px;
     margin-top: 20px;
 }
+
+.admin-profile{
+    border:  3px solid #7A3015;
+}
 /*Navbar Section End*/
 
 /*Appointment Request Section*/
@@ -177,11 +186,12 @@ body {
 }
 
 
-
-
 .table-remove-borders th,
 .table-remove-borders td {
     border: none !important;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
     
 }
 .table-remove-borders th{
@@ -267,8 +277,6 @@ tr:hover{
     color: #fff !important;
     padding:  10px 20px !important;
     border-radius: 10px !important;
-    display: flex !important;
-    margin: auto !important
 }
 .modal-dialog{
     max-width: 80%;
@@ -347,12 +355,12 @@ tr:hover{
 
 }
 
-
-
-
-ul a{
-    color: #fff !important;
+.modal-header button{
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
 }
+
 
 ul a:hover{
     background-color: #7A3015 !important;
@@ -373,6 +381,13 @@ ul a:hover{
     border-radius: 5px;
 }
 
+.swal-icon img{
+    height: 10vh !important;
+}
+
+.swal-button-container button{
+    background-color: green;
+}
 /*Appointment Request End*/
 
 
@@ -405,9 +420,7 @@ ul a:hover{
     align-items: center;
 }
 
-.dropdown-menu a{
-    color: #5a220d !important;
-}
+
 
 .dropdown menu li{
     background-color: #fff !important;
@@ -419,6 +432,16 @@ ul a:hover{
     width: 300px;
     overflow-y: auto;
     height: 70vh;
+}
+
+.dropdown-item a{
+    text-decoration: none !important;
+
+}
+.dropdown-item a:hover{
+    background-color: transparent !important;
+
+
 }
 
 .dropdown-item p{

@@ -232,9 +232,28 @@ if ($result->num_rows > 0) {
                 </button>";
         }
 
-        echo "<button class='btn btn-success' data-id='{$row['id']}' onclick='updateStatus(this, \"on-going\")' style='margin-left: 3px'>
-                  <i class='fas fa-check'></i>
+        echo "<button class='btn btn-success' data-id='{$row['id']}' data-bs-toggle='modal' data-bs-target='#ongoingModal{$row['id']}' style='margin-left: 3px'>
+        <i class='fas fa-check'></i>
             </button>
+            
+            <!-- On-going Confirmation Modal -->
+            <div class='modal fade' id='ongoingModal{$row['id']}' tabindex='-1' aria-labelledby='ongoingModalLabel{$row['id']}' aria-hidden='true'>
+                <div class='modal-dialog modal-dialog-centered w-25'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id='ongoingModalLabel{$row['id']}'>Confirm Status Change</h5>
+                            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                        </div>
+                        <div class='modal-body'>
+                            Are you sure you want to mark this appointment as on-going?
+                        </div>
+                        <div class='modal-footer'>
+                            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                            <button type='button' class='btn btn-success' onclick='updateStatus(this, \"on-going\")' data-id='{$row['id']}' data-bs-dismiss='modal'>Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </td>";
 
         echo "</tr>";

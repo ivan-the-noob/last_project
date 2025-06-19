@@ -221,6 +221,7 @@ $conn->close();
                             <th>Info</th>
                             <th>Action</th>
                         </tr>
+                        
                     </thead>
                     <tbody id="tableBody">
                         <?php

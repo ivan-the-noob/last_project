@@ -200,12 +200,33 @@ $conn->close();
                     </td>
                     <td><?php echo htmlspecialchars($review['comment']); ?></td>
                     <td>
-                        <form action="../../function/php/delete_review_product.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
-                            <input type="hidden" name="id" value="<?php echo (int)$review['id']; ?>">
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
+                     <!-- Delete Button (triggers modal) -->
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteReviewModal<?php echo $review['id']; ?>">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="deleteReviewModal<?php echo $review['id']; ?>" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header text-black">
+                                        <h5 class="modal-title" id="deleteReviewModalLabel">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this review?</p>
+                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form action="../../function/php/delete_review_product.php" method="POST" class="d-inline">
+                                            <input type="hidden" name="id" value="<?php echo (int)$review['id']; ?>">
+                                            <button type="submit" class="btn btn-danger">Delete Review</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -220,26 +241,39 @@ $conn->close();
 <!-- Pagination Controls -->
 <?php if ($total_pages > 1): ?>
     <nav>
-        <ul class="pagination justify-content-end">
-            <?php if ($page > 1): ?>
-                <li class="page-item">
-                    <a class="page-link" href="?page=<?php echo $page - 1; ?>">&laquo; </a>
-                </li>
-            <?php endif; ?>
+        <ul class="pagination justify-content-end">  <!-- Changed to center -->
+            <!-- Previous Button -->
+            <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
+                <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
 
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <li class="page-item <?php echo $i === $page ? 'active' : ''; ?>">
-                    <a class="page-link" href="?page=<?php echo $i; ?>">
-                        <?php echo $i; ?>
-                    </a>
+            <?php
+            // Calculate start and end pages to show (3 pages total)
+            $start_page = max(1, $page - 1);
+            $end_page = min($total_pages, $page + 1);
+            
+            // Adjust if we're at the beginning or end
+            if ($page == 1) {
+                $end_page = min($total_pages, 3);
+            } elseif ($page == $total_pages) {
+                $start_page = max(1, $total_pages - 2);
+            }
+            
+            // Show the calculated pages
+            for ($i = $start_page; $i <= $end_page; $i++): ?>
+                <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
                 </li>
             <?php endfor; ?>
 
-            <?php if ($page < $total_pages): ?>
-                <li class="page-item">
-                    <a class="page-link" href="?page=<?php echo $page + 1; ?>"> &raquo;</a>
-                </li>
-            <?php endif; ?>
+            <!-- Next Button -->
+            <li class="page-item <?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
+                <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
         </ul>
     </nav>
 <?php endif; ?>

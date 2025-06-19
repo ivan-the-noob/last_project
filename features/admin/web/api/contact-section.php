@@ -237,19 +237,40 @@ $conn->close();
                                 <td><?= $index + 1 ?></td>
                                 <td><?= htmlspecialchars($contact['email']) ?></td>
                                 <td><?= htmlspecialchars($contact['message']) ?></td>
-                                <td class="d-flex gap-2">
+                                <td class="d-flex gap-2 justify-content-center">
                                     <!-- Reply Button -->
                                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#replyModal<?= $contact['id'] ?>">
                                         <i class="fas fa-reply"></i>
                                     </button>
 
                                     <!-- Delete Form -->
-                                    <form action="../../function/php/delete_contact.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?');">
-                                        <input type="hidden" name="id" value="<?= (int)$contact['id'] ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm">
+                                   <!-- Delete Button (triggers modal) -->
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteContactModal<?= $contact['id'] ?>">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
-                                    </form>
+
+                                        <!-- Delete Confirmation Modal -->
+                                        <div class="modal fade" id="deleteContactModal<?= $contact['id'] ?>" tabindex="-1" aria-labelledby="deleteContactModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header  text-black">
+                                                        <h5 class="modal-title" id="deleteContactModalLabel">Confirm Deletion</h5>
+                                                        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Are you sure you want to delete this contact message?</p>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form action="../../function/php/delete_contact.php" method="POST" class="d-inline">
+                                                            <input type="hidden" name="id" value="<?= (int)$contact['id'] ?>">
+                                                            <button type="submit" class="btn btn-danger">Delete Message</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </td>
                             </tr>
 

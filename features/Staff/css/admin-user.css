@@ -62,15 +62,24 @@ body {
     display: block;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    width: 100px;
-    height: 60px;
+    width: 55%;
+    height: 10vh;
+    margin: 20px 0 10px 30px;
+}
+h3{
+    padding-left: 6%;
+    color: #7A3015 !important;
 }
 
 .navbar-links {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+.content {
+    flex-grow: 1;
+    background-color: #F5F6FA;
+    overflow-x: auto;
 }
 
 .header {
@@ -130,6 +139,7 @@ body {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    border: 2px solid #7A3015;
 }
 
 .profile-admin button {
@@ -138,6 +148,7 @@ body {
     font-size: 20px;
     display: flex;
     margin: auto;
+    
 }
 .profile-admin i {
     color: #7A3015;
@@ -157,79 +168,170 @@ body {
 }
 /*Navbar Section End*/
 
-
 .app-req{
     padding: 10px 20px;
-    overflow-x:  auto;
-    background-color: #F5F6FA;
+    overflow-x: auto;
 }
 .app-req h3{
     padding: 30px 0 0 20px !important;
     color: #7A3015;
 }
 
-.receipt {
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+.table-wrapper{
+    overflow-x: auto;
 }
 
-.receipt input{
-    margin: 5px;
+
+  .table-remove-borders th,
+  .table-remove-borders td {
+      border: none !important;
+      text-align: center;
+      font-size: 14px;
+      
+  }
+  .table-remove-borders th{
+      background-color: #7A3015;
+      color: #fff;
+  }
+  
+  .table-remove-borders td{
+      background-color: #F1F5F9 !important;
+  }
+  
+  tr:hover{
+      background-color: #FFFFFF;
+  }
+
+img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
-.receipt .add{
-    background-color: #7A3015;
+
+.pagination {
+    display: flex !important;
+    justify-content: center;
+ 
+}
+.pagination .page-item {
+    margin: 0 5px;
+    display: flex;
+}
+.pagination .page-link {
+    color: #000;
+}
+.pagination .page-link:hover {
+    color: #007bff;
+}
+
+.modal-header button{
     border: none;
-    text-align: center;
-    margin: 10px 2px;
-    color: #fff;
-    border-radius: 5px;
+    background-color: transparent;
     font-size: 20px;
 }
-.receipt h3 {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    color: #7A3015;
-}
-
-
-.receipt .total {
-    font-weight: bold;
-    font-size: 18px;
-    margin-top: 20px;
-}
-.download {
-    background-color: brown;
-    color: white;
-    border: none;
-}
-.paid {
-    background-color: green;
-    color: white;
-    border: none;
-}
-
-.save{
+td button{
     border: none;
     background-color: #7A3015;
+    margin: 2px;
+}
+button i{
+    color: #fff;
+}
+td i{
     color: #fff;
     padding: 5px;
-    border-radius: 5px;
+}
+
+.btn-new{
+    background-color: #7A3015 !important;
+    border: none !important;
+    color: #fff !important;
+    padding:  10px 20px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+}
+
+.walk-in{
+    justify-content: space-between; 
+}
+.walk-in .search-bars{
+    width: auto;
+}
+
+
+.search-bars {
+    flex-grow: 1;
     display: flex;
-    margin: auto;
-    margin-top: 10px;
+    justify-content: start;
+    align-items: center;
+    position: relative;
 }
 
-h5{
-    color:#7A3015;
-    font-size: 20px;
-    margin-top: 20px !important;
+.search-bars input {
+    height: 6vh;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding-left: 40px; 
 }
 
-.total{
-    color: #7A3015;
+.search-bars i {
+    position: absolute;
+    left: 10px; 
+    font-size: 18px;
+    color: #000;
+    padding: 5px;
 }
+
+
+
+.dropdown-toggle {
+    white-space: wrap;
+}
+
+
+tr:hover{
+    color: #fff;
+    background-color: #000;
+}
+
+.x{
+    display: grid;
+    justify-content: space-between !important;
+    gap: 5px;
+}
+
+
+
+.pagination .page-item .page-link {
+    border-radius: 50%;
+    background-color: #7A3015;
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    border: none;
+}
+.pagination li a:hover{
+    background-color: #af5433 !important;
+    color: #fff !important;
+}
+.pagination .page-item.active .page-link {
+    background-color: #5a220d;
+    border-color: #5a220d;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #5a220d;
+    color: white;
+}
+
+.form-group{
+    margin: 5px;
+}
+
 .dropdown button{
     align-items: center;
 }
@@ -252,7 +354,4 @@ h5{
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-
-
 

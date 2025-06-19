@@ -207,44 +207,85 @@ $showPagination = $totalRow['total'] > 10;
                                 
                                 echo "<td>{$row['payment']}</td>";
                                 echo "<td>" . (!empty($row['gcash_image']) ? $row['payment_option'] : "Cash") . "</td>";
-                                echo "<td>
-                                <button class='btn btn-primary' style='margin-right: 3px;' data-bs-toggle='modal' data-bs-target='#viewModal' 
-                                    onclick='viewAdditionalInfo(
-                                        {$row['id']}, 
-                                        \"" . addslashes($row['barangay']) . "\", 
-                                        \"" . addslashes($row['pet_type']) . "\", 
-                                        \"" . addslashes($row['breed']) . "\", 
-                                        \"" . addslashes($row['age']) . "\", 
-                                        \"" . addslashes($row['service']) . "\", 
-                                        \"" . date('F j, Y', strtotime($row['appointment_date'])) . "\", 
-                                        \"" . addslashes($row['add_info']) . "\", 
-                                        \"" . addslashes($row['contact_num']) . "\",
-                                        \"" . date('F j, Y h:i A', strtotime($row['created_at'])) . "\"
-                                    )'>
-                                    <i class='fas fa-eye'></i>
-                                </button>";
-                        
-                        if ($row['service_category'] != 'clinic') {
-                            echo "<button class='btn btn-primary' style='margin-right: 5px;' data-bs-toggle='modal' data-bs-target='#locationModal' 
-                                    onclick='showMap({$row['latitude']}, {$row['longitude']})'>
-                                    <i class='fas fa-map-marker-alt'></i>
-                                </button>";
-                        }
-                        
-                        if (!empty($row['gcash_image'])) {
-                            echo "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#gcashModal' 
-                                    onclick='showGcashImage(\"" . addslashes($row['gcash_image']) . "\")'>
-                                    <i class='fas fa-receipt'></i>
-                                </button>";
-                        }
-                        
-                        echo "<button class='btn btn-success' data-id='{$row['id']}' onclick='updateStatus(this, \"waiting\")'>
-                                <i class='fas fa-check'></i>
-                            </button>
-                            <button class='btn btn-danger' data-id='{$row['id']}' onclick='updateStatus(this, \"cancel\")'>
-                                <i class='fas fa-times'></i>
-                            </button>
-                        </td>";
+                              echo "<td>
+        <button class='btn btn-primary' style='margin-right: 3px;' data-bs-toggle='modal' data-bs-target='#viewModal' 
+            onclick='viewAdditionalInfo(
+                {$row['id']}, 
+                \"" . addslashes($row['barangay']) . "\", 
+                \"" . addslashes($row['pet_type']) . "\", 
+                \"" . addslashes($row['breed']) . "\", 
+                \"" . addslashes($row['age']) . "\", 
+                \"" . addslashes($row['service']) . "\", 
+                \"" . date('F j, Y', strtotime($row['appointment_date'])) . "\", 
+                \"" . addslashes($row['add_info']) . "\", 
+                \"" . addslashes($row['contact_num']) . "\",
+                \"" . date('F j, Y h:i A', strtotime($row['created_at'])) . "\"
+            )'>
+            <i class='fas fa-eye'></i>
+        </button>";
+
+if ($row['service_category'] != 'clinic') {
+    echo "<button class='btn btn-primary' style='margin-right: 5px;' data-bs-toggle='modal' data-bs-target='#locationModal' 
+            onclick='showMap({$row['latitude']}, {$row['longitude']})'>
+            <i class='fas fa-map-marker-alt'></i>
+        </button>";
+}
+
+if (!empty($row['gcash_image'])) {
+    echo "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#gcashModal' 
+            onclick='showGcashImage(\"" . addslashes($row['gcash_image']) . "\")'>
+            <i class='fas fa-receipt'></i>
+        </button>";
+}
+
+// Accept Button with Modal Trigger
+echo "<button class='btn btn-success' data-id='{$row['id']}' data-bs-toggle='modal' data-bs-target='#acceptModal{$row['id']}'>
+        <i class='fas fa-check'></i>
+    </button>
+    
+    <!-- Accept Confirmation Modal -->
+    <div class='modal fade' id='acceptModal{$row['id']}' tabindex='-1' aria-labelledby='acceptModalLabel{$row['id']}' aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered w-25'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='acceptModalLabel{$row['id']}'>Confirm Acceptance</h5>
+                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                </div>
+                <div class='modal-body'>
+                    Are you sure you want to accept this appointment?
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                    <button type='button' class='btn btn-success' onclick='acceptAppointment(this, \"waiting\")' data-id='{$row['id']}' data-bs-dismiss='modal'>Confirm Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cancel Button with Modal Trigger -->
+    <button class='btn btn-danger' data-id='{$row['id']}' data-bs-toggle='modal' data-bs-target='#cancelModal{$row['id']}'>
+        <i class='fas fa-times'></i>
+    </button>
+    
+    <!-- Cancel Confirmation Modal -->
+    <div class='modal fade' id='cancelModal{$row['id']}' tabindex='-1' aria-labelledby='cancelModalLabel{$row['id']}' aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered w-25'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='cancelModalLabel{$row['id']}'>Confirm Cancellation</h5>
+                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                </div>
+                <div class='modal-body'>
+                    Are you sure you want to cancel this appointment?
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+                    <button type='button' class='btn btn-danger' onclick='updateStatus(this, \"cancel\")' data-id='{$row['id']}' data-bs-dismiss='modal'>Confirm Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>";
                         
                             
                                 $index++;

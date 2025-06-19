@@ -62,9 +62,14 @@ body {
     display: block;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    width: 100px;
-    height: 60px;
+    width: 55%;
+    height: 10vh;
+    margin: 20px 0 10px 30px;
+}
+
+h3{
+    color: #7A3015;
+    padding-left: 6%;
 }
 
 .navbar-links {
@@ -72,6 +77,13 @@ body {
     flex-direction: column;
     width: 100%;
 }
+.content {
+    flex-grow: 1;
+    background-color: #F5F6FA;
+    overflow-x: auto;
+}
+
+
 
 .header {
     display: flex;
@@ -96,7 +108,29 @@ body {
     cursor: pointer;
     padding: 0;
 }
+.search-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    position: relative;
+}
 
+.search-bar input {
+    height: 6vh;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding-left: 40px; 
+}
+
+.search-bar i {
+    position: absolute;
+    left: 10px; 
+    font-size: 18px;
+    color: #000;
+    padding: 5px;
+}
 .profile-admin {
     display: flex;
     align-items: center;
@@ -108,6 +142,7 @@ body {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    border: 2px solid #7A3015;
 }
 
 .profile-admin button {
@@ -139,44 +174,90 @@ body {
 .app-req{
     padding: 10px 20px;
     overflow-x:  auto;
-    background-color: #F5F6FA;
 }
 .app-req h3{
     padding: 30px 0 0 20px !important;
     color: #7A3015;
 }
 
-.contents{
-    display: grid;
-    justify-content: center;
-    margin-top: 20px;
-}
 
-.contents label{
-    color: #7A3015;
-    font-size: 16px;
-}
 
-input, textarea{
-    padding: 10px !important;
-    border: 2x solid #7A3015 !important;
-    border-radius: 5px !important;
-}
 
-.update{
-    display: flex;
-    justify-content: end;
-    margin-top: 20px;
+.table-remove-borders th,
+.table-remove-borders td {
+    border: none !important;
+    text-align: center;
+    
 }
-
-.update button{
-    border: none;
+.table-remove-borders th{
     background-color: #7A3015;
     color: #fff;
-    padding: 10px;
-    border-radius: 5px;
+    text-align: center;
 
 }
+td button{
+    background-color: #7A3015;
+    color: #fff;
+    border: none;
+    margin: 2px;
+}
+
+td i{
+    color: #fff;
+    padding: 5px;
+}
+
+.table-remove-borders td{
+    background-color: #F1F5F9 !important;
+}
+
+tr:hover{
+    background-color: #FFFFFF;
+}
+
+.table-wrapper{
+    overflow-x: auto;   
+}
+
+.pagination {
+    display: flex !important;
+    justify-content: center;
+}
+.pagination .page-item {
+    margin: 0 5px;
+    display: flex;
+}
+.pagination .page-link {
+    color: #000;
+}
+.pagination .page-link:hover {
+    color: #007bff;
+}
+
+.modal-header button{
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+.btn-new{
+    background-color: #7A3015 !important;
+    border: none !important;
+    color: #fff !important;
+    padding:  10px 20px !important;
+    border-radius: 10px !important;
+    display: flex !important;
+}
+
+.walk-in{
+    justify-content: space-between; 
+
+}
+.walk-in .search-bars{
+    width: auto;
+}
+
+
 .search-bars {
     flex-grow: 1;
     display: flex;
@@ -190,8 +271,7 @@ input, textarea{
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 20px;
-    padding-left: 40px !important; 
-    border-radius: 20px !important;
+    padding-left: 40px; 
 }
 
 .search-bars i {
@@ -202,33 +282,28 @@ input, textarea{
     padding: 5px;
 }
 
-/*Card Section*/
 
-.card{
-    color: #7A3015;
-    border: 2px solid #7A3015;
-    background-color: #FFFFFF;
+
+.dropdown-toggle {
+    white-space: wrap;
 }
-.paid{
-    background-color: green !important;
-}
-.buttons{
-    margin-top: 20px;
-}
-.buttons button{
-    background-color: #7A3015;
-    border: none;
+
+
+tr:hover{
     color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    width: 100px;   
+    background-color: #000;
+}
+.search{
+    display: flex;
+}
+.x{
+    display: grid;
+    justify-content: space-between !important;
+    gap: 10px;
 }
 
 
 
-/*Card Section End*/
-
-/*Pagination Section*/
 .pagination .page-item .page-link {
     border-radius: 50%;
     background-color: #7A3015;
@@ -239,12 +314,10 @@ input, textarea{
     justify-content: center;
     align-items: center; 
     border: none;
-
 }
 .pagination li a:hover{
     background-color: #af5433 !important;
     color: #fff !important;
-
 }
 .pagination .page-item.active .page-link {
     background-color: #5a220d;
@@ -256,7 +329,9 @@ input, textarea{
     color: white;
 }
 
-/*Pagination Section End*/
+.form-group{
+    margin: 5px;
+}
 
 .dropdown button{
     align-items: center;
@@ -280,6 +355,3 @@ input, textarea{
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-
-

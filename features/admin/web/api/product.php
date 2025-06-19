@@ -15,15 +15,10 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product | Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/category-list.css">
-
-
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
       <link rel="icon" href="../../../../assets/img/logo.png" type="image/x-icon">
 
 </head>
@@ -34,6 +29,8 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
         border: none;
         color: #FFFFFF;
     }
+
+  
 </style>
 
 <body>
@@ -154,50 +151,12 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
 </style>
 
           
-            <div class="container mt-4 mb-4 position-absolute w-75" id="lowStockContainer" style="background-color: #fff; z-index: 999; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);">
-    <!-- Close Button -->
-    <button type="button" class="btn-close position-absolute" style="top: 10px; right: 10px;" aria-label="Close" onclick="document.getElementById('lowStockContainer').style.display='none';"></button>
-
-    <h3 class="mt-2">Low Quantity</h3>
-    <div class="row">
-        <?php
-        require '../../../../db.php';
-
-        $products = $conn->query("SELECT * FROM product WHERE quantity < 4");
-
-        if ($products->num_rows > 0):
-            while ($product = $products->fetch_assoc()): ?>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($product['product_name']) ?></h5>
-                            <p class="card-text"><strong>Type:</strong> <?= htmlspecialchars($product['type']) ?></p>
-                            <p class="card-text"><strong>Price:</strong> PHP <?= htmlspecialchars(number_format($product['cost'], 2)) ?></p>
-                            <p class="card-text fw-bold" style="color: red;"><strong>Quantity:</strong> <?= htmlspecialchars($product['quantity']) ?></p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <button class="btn btn-primary" title="Update" data-bs-toggle="modal" data-bs-target="#editProductModal<?= $product['id'] ?>">
-                                    <i class="fas fa-edit"></i> Restock 
-                                </button>
-                                <button class="btn btn-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal<?= $product['id'] ?>">
-                                    <i class="fas fa-trash-alt"></i> Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <div class="col-12 text-start">
-                <p class="text-muted" style="padding-left: 30px">No low stocks.</p>
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
+          
 
            
             <div class="walk-in px-lg-5">
                 <div class="mb-3 x d-flex">
-                    <div class="search">
+                  <div class="search" style="position: relative;">
                         <div class="search-bars">
                             <i class="fa fa-magnifying-glass"></i>
                             <input type="text" id="search-input" class="form-control" placeholder="Search...">
@@ -581,15 +540,19 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                             </div>
 
                         </div>
-                        <?php if ($totalProducts > $perPage): ?>
+                      <?php if ($totalProducts > $perPage): ?>
                             <ul class="pagination justify-content-end mt-3 px-lg-5" id="paginationControls">
                                 <!-- Previous Button -->
                                 <li class="page-item <?= ($page == 1) ? 'disabled' : '' ?>">
                                     <a class="page-link" href="?page=<?= $page - 1 ?>">‹</a>
                                 </li>
 
-                                <!-- Page Numbers -->
-                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <!-- Show only 3 page numbers centered around current page -->
+                                <?php
+                                $startPage = max(1, $page - 1);
+                                $endPage = min($totalPages, $page + 1);
+                                
+                                for ($i = $startPage; $i <= $endPage; $i++): ?>
                                     <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
                                         <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                                     </li>
@@ -602,8 +565,104 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                             </ul>
                         <?php endif; ?>
 
-
                     </div>
+                      <div class="container mt-4 mb-4 position-absolute w-25 " id="lowStockContainer" style="background-color: #fff; width: 50%; bottom: 20px; right: 50px;  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);">
+    <!-- Close Button -->
+    <button type="button" class="btn-close position-absolute" style="top: 10px; right: 10px;" aria-label="Close" onclick="document.getElementById('lowStockContainer').style.display='none';"></button>
+
+    <h3 class="mt-2">Low Quantity</h3>
+    <div class="row">
+        <?php
+        require '../../../../db.php';
+
+        $products = $conn->query("SELECT * FROM product WHERE quantity < 4");
+
+        if ($products->num_rows > 0):
+            while ($product = $products->fetch_assoc()): ?>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm w-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= htmlspecialchars($product['product_name']) ?></h5>
+                            <p class="card-text"><strong>Type:</strong> <?= htmlspecialchars($product['type']) ?></p>
+                            <p class="card-text"><strong>Price:</strong> PHP <?= htmlspecialchars(number_format($product['cost'], 2)) ?></p>
+                            <p class="card-text fw-bold" style="color: red;"><strong>Quantity:</strong> <?= htmlspecialchars($product['quantity']) ?></p>
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <button class="btn btn-primary" title="Update" data-bs-toggle="modal" data-bs-target="#editProductModal<?= $product['id'] ?>">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                 <div class="modal fade" id="editProductModal<?= $product['id'] ?>" tabindex="-1"
+                                    aria-labelledby="editProductModalLabel<?= $product['id'] ?>" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <form action="../../function/php/update_product.php" method="POST"
+                                                enctype="multipart/form-data">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="editProductModalLabel<?= $product['id'] ?>">Edit
+                                                        Product
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="id" value="<?= $product['id'] ?>">
+                                                   
+                                                    <div class="form-group">
+                                                        <label for="quantity">Quantity</label>
+                                                        <input type="number" class="form-control" id="quantity" name="quantity"
+                                                            value="<?= htmlspecialchars($product['quantity']) ?>" required>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal<?= $product['id'] ?>">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                 <div class="modal fade" id="confirmDeleteModal<?= $product['id'] ?>" tabindex="-1"
+                                    aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete this product?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <form action="../../function/php/delete_product.php" method="POST"
+                                                    class="d-inline">
+                                                    <input type="hidden" name="id" value="<?= $product['id'] ?>">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="col-12 text-start">
+                <p class="text-muted" style="padding-left: 30px">No low stocks.</p>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
 
                     <!-- Edit Product Modal -->
                 <?php if ($products->num_rows > 0): ?>
@@ -664,8 +723,9 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
 </body>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" crossorigin="anonymous">
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" crossorigin="anonymous">
 </script>
 <script src="../../function/script/toggle-menu.js"></script>
 <script src="../../function/script/pagination.js"></script>

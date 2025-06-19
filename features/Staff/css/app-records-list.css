@@ -62,10 +62,11 @@ body {
     display: block;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    width: 100px;
-    height: 60px;
+    width: 70%;
+    height: 15vh;
+    margin: 20px 0 20px 30px;
 }
+
 
 .navbar-links {
     display: flex;
@@ -176,42 +177,24 @@ h3{
     padding: 20px 30px; 
 }
 
-
-.table-remove-borders th,
-.table-remove-borders td {
-    border: none !important;
-    text-align: center;
-    white-space: nowrap;
-    
+/*Card Section */
+.card{
+    background-color: #f9f9f9;
 }
-.table-remove-borders th{
-    background-color: #7A3015;
-    color: #fff;
-    text-align: center;
 
+.card h5{
+    height: 10vh;
+    color: #7A3015;
 }
-td button{
-    background-color: #7A3015;
+.card button{
+    display: flex;
+    margin: auto;
+    background-color: #5a220d;
     color: #fff;
+    padding: 5px 20px;
+    border-radius: 10px;
     border: none;
-    margin: 2px;
 }
-
-td i{
-    color: #fff;
-    padding: 5px;
-}
-
-.table-remove-borders td{
-    background-color: #F1F5F9 !important;
-}
-
-tr:hover{
-    background-color: #FFFFFF;
-}
-
-
-
 
 .pagination {
     display: flex !important;
@@ -228,7 +211,39 @@ tr:hover{
 .pagination .page-link:hover {
     color: #007bff;
 }
+.modal-dialog{
+    max-width: 1200px;
+    justify-content: center;
+    align-items: center;
+}
 
+
+.modal-dialog .row{
+    padding: 20px;
+}
+
+.modal-dialog p{
+    color:#7A3015;
+    font-size: 16px;
+    padding: 5px;
+    border-radius:  5px; 
+}
+
+.save{
+    background-color: #7A3015;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    display: flex;
+    margin-left: auto;
+}
+
+.modal-dialog h6{
+    color: #7A3015;
+    font-size: 20px;
+    font-weight: bold;
+}
 .modal-header button{
     border: none;
     background-color: transparent;

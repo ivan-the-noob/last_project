@@ -65,9 +65,9 @@ body {
     display: block;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    width: 100px;
-    height: 60px;
+    width: 70%;
+    height: 15vh;
+    margin: 20px 0 20px 30px;
 }
 
 .navbar-links {
@@ -168,7 +168,7 @@ body {
 /*Appointment Request Section*/
 
 .app-req{
-    padding: 10px 20px;
+    padding: 10px 5px;
     overflow-x: auto;
 }
 .app-req h3{
@@ -283,6 +283,15 @@ tr:hover{
 
 .dropdown-toggle {
     white-space: wrap;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+.input-radio{
+    display: flex;
+    justify-content:center;
+    gap: 5px;
+    color: #7A3015;
 }
 
 .medical-services a{
