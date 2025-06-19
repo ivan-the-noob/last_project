@@ -48,7 +48,7 @@ function updateStatus(button, status) {
                     // Redirect for waiting status
                     window.location.href = 'app-waiting.php';
                 } else if (status === 'on-going') {
-                     window.location.href = 'on-going.php';
+                     window.location.href = 'app-ongoing.php';
 
                 } else {
                     // Default behavior for other statuses
