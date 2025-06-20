@@ -689,6 +689,28 @@ function togglePaymentFields() {
         mapTypeId: 'roadmap'
     });
 
+    // Create a marker (pin) at the user's coordinates
+    var marker = new google.maps.Marker({
+        position: mapCenter,
+        map: map,
+        draggable: true,
+        title: "Your Location",
+        animation: google.maps.Animation.DROP
+    });
+
+    // Add info window to the marker
+    var infowindow = new google.maps.InfoWindow({
+        content: '<div>Your Current Location<br>Lat: ' + userLat + '<br>Lng: ' + userLng + '</div>'
+    });
+    
+    // Open info window when map loads
+    infowindow.open(map, marker);
+    
+    // Add click listener to marker to show info window
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
+
     var defaultBounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(14.2680, 120.8400), 
         new google.maps.LatLng(14.2940, 120.8695)
@@ -704,14 +726,6 @@ function togglePaymentFields() {
     autocomplete.bindTo('bounds', map);
 
     autocomplete.setFields(['address_component', 'geometry', 'icon', 'name']);
-
-    var infowindow = new google.maps.InfoWindow();
-    var marker = new google.maps.Marker({
-        map: map,
-        anchorPoint: new google.maps.Point(0, -29),
-        draggable: true,
-        visible: true
-    });
 
     $('#autocomplete').on('focus', function () {
         var pacContainer = $('.pac-container');
