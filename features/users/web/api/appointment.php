@@ -677,38 +677,12 @@ function togglePaymentFields() {
 
 <script>
   function initAutocomplete() {
-    // Get coordinates from PHP
-    var userLat = <?php echo isset($row['latitude']) && !empty($row['latitude']) ? $row['latitude'] : '14.283634481584178'; ?>;
-    var userLng = <?php echo isset($row['longitude']) && !empty($row['longitude']) ? $row['longitude'] : '120.86458688732908'; ?>;
-    
-    var mapCenter = { lat: userLat, lng: userLng }; 
+    var mapCenter = { lat: 14.283634481584178, lng: 120.86458688732908 }; 
 
     var map = new google.maps.Map(document.getElementById('modalMap'), {
         center: mapCenter,
         zoom: 20,
         mapTypeId: 'roadmap'
-    });
-
-    // Create a marker (pin) at the user's coordinates
-    var marker = new google.maps.Marker({
-        position: mapCenter,
-        map: map,
-        draggable: true,
-        title: "Your Location",
-        animation: google.maps.Animation.DROP
-    });
-
-    // Add info window to the marker
-    var infowindow = new google.maps.InfoWindow({
-        content: '<div>Your Current Location<br>Lat: ' + userLat + '<br>Lng: ' + userLng + '</div>'
-    });
-    
-    // Open info window when map loads
-    infowindow.open(map, marker);
-    
-    // Add click listener to marker to show info window
-    marker.addListener('click', function() {
-        infowindow.open(map, marker);
     });
 
     var defaultBounds = new google.maps.LatLngBounds(
@@ -726,6 +700,14 @@ function togglePaymentFields() {
     autocomplete.bindTo('bounds', map);
 
     autocomplete.setFields(['address_component', 'geometry', 'icon', 'name']);
+
+    var infowindow = new google.maps.InfoWindow();
+    var marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, -29),
+        draggable: true,
+        visible: true
+    });
 
     $('#autocomplete').on('focus', function () {
         var pacContainer = $('.pac-container');
