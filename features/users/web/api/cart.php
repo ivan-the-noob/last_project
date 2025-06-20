@@ -31,6 +31,14 @@ if ($result->num_rows > 0) {
     echo "No product found.";
 }
 
+if (isset($_SESSION['email']) && isset($_SESSION['profile_picture'])) {
+    $email = $_SESSION['email'];
+    $profile_picture = $_SESSION['profile_picture'];
+} else {
+    header("Location: features/users/web/api/login.php");
+    exit();
+}
+
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
     $stmt = $conn->prepare("SELECT name, contact_number, home_street, address_search FROM users WHERE email = ?");
@@ -114,7 +122,7 @@ if (isset($_SESSION['email'])) {
                             <!-- Profile Dropdown -->
                             <div class="dropdown second-dropdown">
                                 <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                 <img src="../../../../assets/img/<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Image" class="profile">
+                                 <img src="../../../../assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
                                 </button>
                                 <ul class="dropdown-menu custom-center-dropdown" aria-labelledby="dropdownMenuButton2">
                                     <li><a class="dropdown-item" href="dashboard.php">Profile</a></li>
