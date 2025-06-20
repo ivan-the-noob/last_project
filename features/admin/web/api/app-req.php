@@ -232,8 +232,11 @@ if ($row['service_category'] != 'clinic') {
 }
 
 if (!empty($row['gcash_image'])) {
+    $gcashImage = addslashes($row['gcash_image']);
+    $gcashRef = addslashes($row['gcash_reference'] ?? '');
+
     echo "<button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#gcashModal' 
-            onclick='showGcashImage(\"" . addslashes($row['gcash_image']) . "\")'>
+            onclick='showGcashImage(\"$gcashImage\", \"$gcashRef\")'>
             <i class='fas fa-receipt'></i>
         </button>";
 }
@@ -358,12 +361,21 @@ echo "<button class='btn btn-success' data-id='{$row['id']}' data-bs-toggle='mod
                             <h5 class="modal-title" id="gcashModalLabel">GCash Payment Image</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <img id="gcashImage" src="" alt="GCash Receipt" class="img-fluid"/>
+                       <div class="modal-body">
+                            <img id="gcashImage" src="" alt="GCash Receipt" class="img-fluid mb-2"/>
+                            <p><strong>Reference No:</strong> <span id="gcashReference">N/A</span></p>
                         </div>
+
                     </div>
                 </div>
             </div>
+            <script>
+            function showGcashImage(imageSrc, reference) {
+                document.getElementById('gcashImage').src = 'path/to/uploads/' + imageSrc; // update to your actual path
+                document.getElementById('gcashReference').textContent = reference || 'N/A';
+            }
+            </script>
+
             </div>
             <?php if ($showPagination): ?>
                 <ul class="pagination justify-content-end mt-3 px-lg-5" id="paginationControls">
