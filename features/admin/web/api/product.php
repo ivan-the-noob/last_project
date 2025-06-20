@@ -226,7 +226,7 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                 $totalProducts = $totalProductsRow['total'];
                 $totalPages = ceil($totalProducts / $perPage); // Calculate total pages
 
-               $sql = "SELECT * FROM product ORDER BY created_at DESC LIMIT $perPage OFFSET $offset";
+               $sql = "SELECT * FROM product ORDER BY id DESC LIMIT $perPage OFFSET $offset";
                 $products = $conn->query($sql);
 
             ?>
