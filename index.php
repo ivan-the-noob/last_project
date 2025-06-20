@@ -111,7 +111,7 @@ $conn->close();
                         $email = $_SESSION['email'] ?? null;
                          if ($email): ?>
                             <!-- Profile Dropdown -->
-                            <div class="dropdown second-dropdown">
+                            <div class="dropdown second-dropdown"><img src="assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
                                 <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="assets/img/<?php echo htmlspecialchars($_SESSION['profile_picture']); ?>" alt="Profile Image" class="profile">
                                 </button>
