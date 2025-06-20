@@ -229,6 +229,8 @@ if ($row['service_category'] != 'clinic') {
             onclick='showMap({$row['latitude']}, {$row['longitude']})'>
             <i class='fas fa-map-marker-alt'></i>
         </button>";
+}
+
 <?php if (!empty($row['gcash_image'])): ?>
     <!-- Trigger button -->
     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#gcashModal">
