@@ -223,7 +223,7 @@ if ($result->num_rows > 0) {
             
             <!-- On-going Confirmation Modal -->
             <div class='modal fade' id='ongoingModal{$row['id']}' tabindex='-1' aria-labelledby='ongoingModalLabel{$row['id']}' aria-hidden='true'>
-                <div class='modal-dialog modal-dialog-centered w-25'>
+                <div class='modal-dialog modal-dialog-centered w-50'>
                     <div class='modal-content'>
                         <div class='modal-header'>
                             <h5 class='modal-title' id='ongoingModalLabel{$row['id']}'>Confirm Status Change</h5>

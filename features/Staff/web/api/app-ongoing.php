@@ -224,7 +224,7 @@
                             
                             <!-- Finish Confirmation Modal -->
                             <div class='modal fade' id='finishModal{$row['id']}' tabindex='-1' aria-labelledby='finishModalLabel{$row['id']}' aria-hidden='true'>
-                                <div class='modal-dialog modal-dialog-centered w-25'>
+                                <div class='modal-dialog modal-dialog-centered w-50'>
                                     <div class='modal-content'>
                                         <div class='modal-header'>
                                             <h5 class='modal-title' id='finishModalLabel{$row['id']}'>Confirm Completion</h5>

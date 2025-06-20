@@ -230,7 +230,7 @@ echo "<button class='btn btn-success' data-id='{$row['id']}' data-bs-toggle='mod
     
     <!-- Accept Confirmation Modal -->
     <div class='modal fade' id='acceptModal{$row['id']}' tabindex='-1' aria-labelledby='acceptModalLabel{$row['id']}' aria-hidden='true'>
-        <div class='modal-dialog modal-dialog-centered w-25'>
+        <div class='modal-dialog modal-dialog-centered w-50'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <h5 class='modal-title' id='acceptModalLabel{$row['id']}'>Confirm Acceptance</h5>
