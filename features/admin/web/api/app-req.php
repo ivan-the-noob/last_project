@@ -249,7 +249,7 @@ if (!empty($row['gcash_image'])) {
                     <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                 </div>
                 <div class='modal-body'>
-                    <img src=\"path/to/uploads/$gcashImage\" alt='GCash Receipt' class='img-fluid mb-2'/>
+                    <img src=\"../../../../assets/img/gcash/$gcashImage\" alt='GCash Receipt' class='img-fluid mb-2'/>
                     <p><strong>Reference No:</strong> <span>$gcashRef</span></p>
                 </div>
             </div>
