@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "u373116035_digitalpaws";
-$password = "#Bakitako2323";
-$dbname = "u373116035_digitalpaws";
+ $servername = "localhost";
+ $username = "u373116035_digitalpaws";
+ $password = "#Bakitako2323";
+ $dbname = "u373116035_digitalpaws";
 
 // $servername = "localhost";
 // $username = "root";

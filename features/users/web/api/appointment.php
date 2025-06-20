@@ -26,18 +26,36 @@
 session_start();
 
 include '../../../../db.php';
-
 // Set the timezone to Philippine Time (Asia/Manila)
 date_default_timezone_set('Asia/Manila');
 
-// Check if the user is logged in
-if (isset($_SESSION['email']) && isset($_SESSION['profile_picture'])) {
-    $email = $_SESSION['email'];
-    $profile_picture = $_SESSION['profile_picture'];
+// Start the session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+// Check if the user is logged in (only store email in session)
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
 } else {
     header("Location: ../../web/api/login.php");
     exit();
+}
+
+// Always fetch profile_picture fresh from DB
+$profile_picture = 'default.png'; // fallback
+
+if ($email) {
+    $stmt = $conn->prepare("SELECT profile_picture FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $row = $result->fetch_assoc()) {
+        $profile_picture = $row['profile_picture'] ?? 'default.png';
+    }
+
+    $stmt->close();
 }
 
 $today = date('Y-m-d');
@@ -179,15 +197,7 @@ $stmt->bind_param("ssssssisssssssssss", $ownerName, $contactNum, $email, $barang
                     <div class="d-flex ml-auto">
                         <?php if ($email): ?>
                             <!-- Profile Dropdown -->
-                            <div class="dropdown second-dropdown">
-                                <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../../../../assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
-                                </button>
-                                <ul class="dropdown-menu custom-center-dropdown" aria-labelledby="dropdownMenuButton2">
-                                    <li><a class="dropdown-item" href="dashboard.php">Profile</a></li>
-                                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                                </ul>
-                            </div>
+                            
                           <?php
                             include '../../function/php/count_cart.php';
                           ?>
@@ -273,6 +283,15 @@ $stmt->bind_param("ssssssisssssssssss", $ownerName, $contactNum, $email, $barang
                                     </ul>
 
                                 </div>
+                                <div class="dropdown second-dropdown">
+                                <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                               <img src="../../../../assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
+                                </button>
+                                <ul class="dropdown-menu custom-center-dropdown" aria-labelledby="dropdownMenuButton2">
+                                    <li><a class="dropdown-item" href="dashboard.php">Profile</a></li>
+                                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                </ul>
+                            </div>
                             </div>
                             </div>
 
