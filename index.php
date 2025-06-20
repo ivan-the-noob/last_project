@@ -108,6 +108,11 @@ $conn->close();
                     <div class="d-flex ml-auto">
                         
                        
+                          <?php 
+                            require 'db.php';
+                            include 'features/users/function/php/count_cart.php';
+                            
+                          ?>
                     <div class="d-flex justify-content-center align-items-center gap-2">
                         <a href="features/users/function/php/update_cart_status.php" class="header-cart">
                             <span class="material-symbols-outlined">
@@ -187,7 +192,10 @@ $conn->close();
 
                                         $conn->close();
                                         ?>
-                                         <?php
+
+
+                                    </ul>
+                                     <?php
                         $email = $_SESSION['email'] ?? null;
                          if ($email): ?>
                             <!-- Profile Dropdown -->
@@ -200,14 +208,6 @@ $conn->close();
                                     <li><a class="dropdown-item" href="features/users/function/authentication/logout.php">Logout</a></li>
                                 </ul>
                             </div>
-                          <?php 
-                            require 'db.php';
-                            include 'features/users/function/php/count_cart.php';
-                            
-                          ?>
-
-
-                                    </ul>
 
                                 </div>
 
