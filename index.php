@@ -107,24 +107,7 @@ $conn->close();
                     </ul>
                     <div class="d-flex ml-auto">
                         
-                        <?php
-                        $email = $_SESSION['email'] ?? null;
-                         if ($email): ?>
-                            <!-- Profile Dropdown -->
-                            <div class="dropdown second-dropdown">
-                                <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                               <img src="assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
-                                </button>
-                                <ul class="dropdown-menu custom-center-dropdown" aria-labelledby="dropdownMenuButton2">
-                                    <li><a class="dropdown-item" href="features/users/web/api/dashboard.php">Profile</a></li>
-                                    <li><a class="dropdown-item" href="features/users/function/authentication/logout.php">Logout</a></li>
-                                </ul>
-                            </div>
-                          <?php 
-                            require 'db.php';
-                            include 'features/users/function/php/count_cart.php';
-                            
-                          ?>
+                       
                     <div class="d-flex justify-content-center align-items-center gap-2">
                         <a href="features/users/function/php/update_cart_status.php" class="header-cart">
                             <span class="material-symbols-outlined">
@@ -204,6 +187,24 @@ $conn->close();
 
                                         $conn->close();
                                         ?>
+                                         <?php
+                        $email = $_SESSION['email'] ?? null;
+                         if ($email): ?>
+                            <!-- Profile Dropdown -->
+                            <div class="dropdown second-dropdown">
+                                <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                               <img src="assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
+                                </button>
+                                <ul class="dropdown-menu custom-center-dropdown" aria-labelledby="dropdownMenuButton2">
+                                    <li><a class="dropdown-item" href="features/users/web/api/dashboard.php">Profile</a></li>
+                                    <li><a class="dropdown-item" href="features/users/function/authentication/logout.php">Logout</a></li>
+                                </ul>
+                            </div>
+                          <?php 
+                            require 'db.php';
+                            include 'features/users/function/php/count_cart.php';
+                            
+                          ?>
 
 
                                     </ul>
