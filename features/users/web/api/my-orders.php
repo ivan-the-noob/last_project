@@ -577,17 +577,29 @@ document.querySelectorAll('.cancel').forEach(button => {
         ?>
 
         <?php foreach ($groupedCompletedOrders as $createdAt => $ordersGroup): ?>
+            <?php
+            // Check if any order in this group is unrated
+            $hasUnratedOrder = false;
+            $firstUnratedOrderId = null;
+            foreach ($ordersGroup as $order) {
+                if ($order['is_rated'] == 0) {
+                    $hasUnratedOrder = true;
+                    $firstUnratedOrderId = $order['id'];
+                    break;
+                }
+            }
+            ?>
+            
             <div class="card p-3 mt-4">
                 <div class="d-flex gap-1 mb-3 justify-content-between align-items-center">
                     <p class="p-2 completed-orders mb-0">Completed Orders</p>
 
-                    <!-- Rate Button (only show if not rated) -->
-                   <?php if ($is_rated == 0): ?>
-                        <button class="btn btn-warning btn-sm text-white fw-bold" data-bs-toggle="modal" data-bs-target="#ratingModal">
-                            Rate our service
+                    <!-- Rate Button (only show if group has unrated orders) -->
+                    <?php if ($hasUnratedOrder): ?>
+                        <button class="btn btn-warning btn-sm text-white fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#ratingModal<?= $firstUnratedOrderId ?>">
+                            Rate this product
                         </button>
                     <?php endif; ?>
-
                 </div>
 
                 <div class="row align-items-center">
@@ -606,7 +618,6 @@ document.querySelectorAll('.cancel').forEach(button => {
                                 <div class="col-md-7">
                                     <h5 class="card-title mb-1"><?php echo htmlspecialchars($order['product_name']); ?></h5>
                                     <p class="mb-0">Quantity: <?php echo htmlspecialchars($order['quantity']); ?></p>
-               
                                 </div>
                                 <div class="col-md-3 text-end">
                                     <p class="mb-1">Subtotal: <span class="price">₱<?php echo number_format($order['cost'] * $order['quantity'], 2); ?></span></p>
@@ -621,42 +632,43 @@ document.querySelectorAll('.cancel').forEach(button => {
                 </div>
             </div>
 
-            <!-- Rating Modal -->
-            <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="ratingModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <form id="ratingForm" action="../../function/php/submit_rating.php" method="POST">
-                        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
-                          <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['id']); ?>">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="ratingModalLabel">Rate Our Service</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-
-                            <div class="modal-body">
-                               <div class="mb-3 text-center">
-                                    <input type="hidden" name="rating" id="ratingValue">
-                                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                                        <i class="fa-regular fa-star fa-2x star" data-value="<?php echo $i; ?>" style="cursor:pointer; color: #ccc;"></i>
-                                    <?php endfor; ?>
-                                    <div id="ratingError" class="text-danger mt-2" style="display:none;">Star rating is required.</div>
+            <!-- Rating Modal (only show if group has unrated orders) -->
+            <?php if ($hasUnratedOrder): ?>
+                <div class="modal fade" id="ratingModal<?= $firstUnratedOrderId ?>" tabindex="-1" aria-labelledby="ratingModalLabel<?= $firstUnratedOrderId ?>" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <form id="ratingForm" action="../../function/php/submit_rating.php" method="POST">
+                            <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($firstUnratedOrderId); ?>">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ratingModalLabel<?= $firstUnratedOrderId ?>">Rate Our Service</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
+                                <div class="modal-body">
+                                    <div class="mb-3 text-center">
+                                        <input type="hidden" name="rating" id="ratingValue">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <i class="fa-regular fa-star fa-2x star" data-value="<?php echo $i; ?>" style="cursor:pointer; color: #ccc;"></i>
+                                        <?php endfor; ?>
+                                        <div id="ratingError" class="text-danger mt-2" style="display:none;">Star rating is required.</div>
+                                    </div>
 
-                                <div class="mb-3">
-                                    <label for="comment" class="form-label fw-bold">Comments (optional)</label>
-                                    <textarea name="comment" class="form-control" rows="3" placeholder="Tell us what you think..."></textarea>
+                                    <div class="mb-3">
+                                        <label for="comment" class="form-label fw-bold">Comments (optional)</label>
+                                        <textarea name="comment" class="form-control" rows="3" placeholder="Tell us what you think..."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-warning text-white fw-bold">Submit</button>
                                 </div>
                             </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-warning text-white fw-bold">Submit</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
         <?php endforeach; ?>
 
     <?php else: ?>
