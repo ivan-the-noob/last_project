@@ -397,9 +397,12 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
 
     <tbody id="productTableBody">
         <?php if ($products->num_rows > 0): ?>
-            <?php while ($product = $products->fetch_assoc()): ?>
-                <tr>
-                    <td><?= $product['id'] ?></td>
+             <?php 
+            $counter = $offset + 1;
+            while ($product = $products->fetch_assoc()): 
+        ?>
+            <tr>
+                <td><?= $counter++ ?></td>
                     <td>
                         <img src="../../../../assets/img/product/<?= htmlspecialchars($product['product_img']) ?>"
                             alt="Product Image" style="width: 50px; height: 50px;">
