@@ -202,8 +202,7 @@ $conn->close();
 
                                 </div>
                                  <div class="dropdown second-dropdown">
-                                <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                              <img src="assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
+                                <button class="btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">  <img src="assets/img/<?php echo htmlspecialchars($profile_picture); ?>" alt="Profile Image" class="profile">
                                 </button>
                                 <ul class="dropdown-menu custom-center-dropdown" aria-labelledby="dropdownMenuButton2">
                                     <li><a class="dropdown-item" href="features/users/web/api/dashboard.php">Profile</a></li>
