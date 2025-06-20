@@ -3,12 +3,17 @@
 session_start();
 
 require '../../../../db.php';
-if (isset($_SESSION['email']) && isset($_SESSION['profile_picture'])) {
-    $email = $_SESSION['email'];
-    $profile_picture = $_SESSION['profile_picture'];
-} else {
-    header("Location: features/users/web/api/login.php");
-    exit();
+if ($email) {
+    $stmt = $conn->prepare("SELECT profile_picture FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $row = $result->fetch_assoc()) {
+        $profile_picture = $row['profile_picture'] ?? 'default.png';
+    }
+
+    $stmt->close();
 }
 ?>
 
