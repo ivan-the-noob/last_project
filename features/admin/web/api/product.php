@@ -568,14 +568,14 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                     </div>
                       <div class="container mt-4 mb-4 position-absolute w-25 " id="lowStockContainer" style="background-color: #fff; width: 50%; bottom: 20px; right: 50px;  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);">
     <!-- Close Button -->
-    <button type="button" class="btn-close position-absolute" style="top: 10px; right: 10px;" aria-label="Close" onclick="document.getElementById('lowStockContainer').style.display='none';"></button>
+    <button type="button" class="btn-close position-absolute" style="top: 10px; left: 10px;" aria-label="Close" onclick="document.getElementById('lowStockContainer').style.display='none';"></button>
 
     <h3 class="mt-2">Low Quantity</h3>
     <div class="row">
         <?php
         require '../../../../db.php';
 
-        $products = $conn->query("SELECT * FROM product WHERE quantity < 4");
+        $products = $conn->query("SELECT * FROM product WHERE quantity < 4 ORDER BY created_at DESC");
 
         if ($products->num_rows > 0):
             while ($product = $products->fetch_assoc()): ?>
