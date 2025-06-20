@@ -195,7 +195,9 @@ $conn->close();
 
 
                                     </ul>
-                                     <?php
+                                   
+                                </div>
+                                  <?php
                         $email = $_SESSION['email'] ?? null;
                          if ($email): ?>
                             <!-- Profile Dropdown -->
@@ -209,7 +211,6 @@ $conn->close();
                                 </ul>
                             </div>
 
-                                </div>
 
                             </div>
                             </div>
