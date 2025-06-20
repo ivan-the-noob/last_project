@@ -231,30 +231,32 @@ if ($row['service_category'] != 'clinic') {
         </button>";
 }
 
-<?php if (!empty($row['gcash_image'])): ?>
-    <!-- Trigger button -->
-    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#gcashModal">
-        <i class="fas fa-receipt"></i>
+
+if (!empty($row['gcash_image'])) {
+    $gcashImage = addslashes($row['gcash_image']);
+    $gcashRef = addslashes($row['gcash_reference'] ?? '');
+
+    echo "
+    <button class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#gcashModal'>
+        <i class='fas fa-receipt'></i>
     </button>
 
-    <!-- Modal with direct values -->
-    <div class="modal fade" id="gcashModal" tabindex="-1" aria-labelledby="gcashModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 300px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="gcashModalLabel">GCash Payment Image</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class='modal fade' id='gcashModal' tabindex='-1' aria-labelledby='gcashModalLabel' aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered' style='max-width: 300px'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='gcashModalLabel'>GCash Payment Image</h5>
+                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                 </div>
-                <div class="modal-body">
-                    <img src="path/to/uploads/<?php echo htmlspecialchars($row['gcash_image']); ?>" alt="GCash Receipt" class="img-fluid mb-2"/>
-                    <p><strong>Reference No:</strong> 
-                        <span><?php echo htmlspecialchars($row['gcash_reference'] ?? 'N/A'); ?></span>
-                    </p>
+                <div class='modal-body'>
+                    <img src=\"path/to/uploads/$gcashImage\" alt='GCash Receipt' class='img-fluid mb-2'/>
+                    <p><strong>Reference No:</strong> <span>$gcashRef</span></p>
                 </div>
             </div>
         </div>
     </div>
-<?php endif; ?>
+    ";
+}
 
 
 // Accept Button with Modal Trigger
@@ -371,6 +373,7 @@ echo "<button class='btn btn-success' data-id='{$row['id']}' data-bs-toggle='mod
                 </div>
             </div>
            
+       
             </div>
             <?php if ($showPagination): ?>
                 <ul class="pagination justify-content-end mt-3 px-lg-5" id="paginationControls">
