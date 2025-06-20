@@ -582,10 +582,8 @@ document.getElementById('service').addEventListener('change', function() {
                 require '../../../../db.php';
                     $email = $_SESSION['email']; // make sure session email is set
                     $name = $_SESSION['name'];
-
                     $addressValue = '';
-
-                    $query = $conn->prepare("SELECT address_search, home_street FROM users WHERE email = ?");
+                    $query = $conn->prepare("SELECT latitude, longitude, address_search, home_street FROM users WHERE email = ?");
                     $query->bind_param("s", $email);
                     $query->execute();
                     $result = $query->get_result();
@@ -596,7 +594,8 @@ document.getElementById('service').addEventListener('change', function() {
                 ?>
              
               <div class="form-group mt-3" id= "autocomplete-wrapper">
-                <input id="autocomplete" placeholder="Can't find your location? Search here." type="text" class="form-control">
+                <input id="autocomplete" placeholder="Can't find your location? Search here." type="text" class="form-control" value="<?php echo htmlspecialchars($addressValue); ?>">
+
               </div>
                 <select id="barangayDropdown" class="form-control w-50 mt-2 mb-2" name="barangayDropdown" disabled>
                   <option value="">Select Barangay</option>
@@ -678,7 +677,11 @@ function togglePaymentFields() {
 
 <script>
   function initAutocomplete() {
-    var mapCenter = { lat: 14.283634481584178, lng: 120.86458688732908 }; 
+    // Get coordinates from PHP
+    var userLat = <?php echo isset($row['latitude']) && !empty($row['latitude']) ? $row['latitude'] : '14.283634481584178'; ?>;
+    var userLng = <?php echo isset($row['longitude']) && !empty($row['longitude']) ? $row['longitude'] : '120.86458688732908'; ?>;
+    
+    var mapCenter = { lat: userLat, lng: userLng }; 
 
     var map = new google.maps.Map(document.getElementById('modalMap'), {
         center: mapCenter,
