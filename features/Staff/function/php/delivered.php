@@ -50,7 +50,7 @@ if ($result && $result->num_rows > 0) {
     }
 
     // Pagination
-    $countSql = "SELECT COUNT(*) AS total FROM checkout WHERE status = 'to-ship'";
+    $countSql = "SELECT COUNT(*) AS total FROM checkout WHERE status = 'finish'";
     $countResult = $conn->query($countSql);
     $totalRows = $countResult->fetch_assoc()['total'];
     $totalPages = ceil($totalRows / $limit);
