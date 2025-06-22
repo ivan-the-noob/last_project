@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
       
-        header("Location: ../../web/api/product.php");
+          header("Location: ../../web/api/product.php?updated=" . urlencode($productName));
         exit(); 
     } else {
         echo "Error updating product: " . $stmt->error;

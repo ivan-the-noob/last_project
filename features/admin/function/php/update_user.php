@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ssi", $name, $email, $userId);
 
     if ($stmt->execute()) {
-        header("Location: ../../web/api/users.php?msg=User updated successfully");
+        header("Location: ../../web/api/users.php?updated=success");
     } else {
         header("Location: your_page.php?msg=Error updating user");
     }

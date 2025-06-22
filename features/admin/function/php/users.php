@@ -37,7 +37,7 @@ if (!$result) {
             echo "<div class='modal fade' id='deleteModal".$id."' tabindex='-1' role='dialog' aria-labelledby='deleteModalLabel' aria-hidden='true'>";
             echo "  <div class='modal-dialog modal-dialog-centered modal-sm w-25' role='document'>";
             echo "    <div class='modal-content'>";
-            echo "      <div class='modal-header d-flex justify-content-'>";
+            echo "      <div class='modal-header d-flex justify-content-between'>";
             echo "        <h5 class='modal-title' id='deleteModalLabel'>Confirm Delete</h5>";
             echo "        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>";
             echo "          <span aria-hidden='true'>&times;</span>";
@@ -204,6 +204,98 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
+
+<?php
+if (isset($_GET['updated']) && $_GET['updated'] === 'success') {
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toast = document.createElement('div');
+            toast.textContent = 'User has been updated successfully';
+            toast.style.position = 'fixed';
+            toast.style.bottom = '70px';
+            toast.style.right = '20px';
+            toast.style.background = '#28a745';
+            toast.style.color = 'white';
+            toast.style.padding = '12px 20px';
+            toast.style.borderRadius = '8px';
+            toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+            toast.style.zIndex = '9999';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        });
+    </script>";
+}
+?>
+
+<?php
+if (isset($_GET['deleted'])) {
+    echo "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toast = document.createElement('div');
+            let message = '';
+
+            switch ('" . $_GET['deleted'] . "') {
+                case 'success':
+                    message = 'User deleted successfully';
+                    break;
+                case 'error':
+                    message = 'Error: Could not delete user';
+                    break;
+                case 'invalid':
+                    message = 'Invalid user ID';
+                    break;
+            }
+
+            if (message !== '') {
+                const toast = document.createElement('div');
+                toast.textContent = message;
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.right = '20px';
+                toast.style.background = '#dc3545';
+                toast.style.color = 'white';
+                toast.style.padding = '12px 20px';
+                toast.style.borderRadius = '8px';
+                toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+                toast.style.zIndex = '9999';
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 4000);
+            }
+        });
+    </script>";
+}
+?>
+
+<?php if (isset($_GET['status'])): ?>
+<script>
+    const status = "<?= $_GET['status'] ?>";
+    let msg = "";
+    let bg = "#28a745"; // green
+
+    if (status === "banned") msg = "User banned successfully";
+    else if (status === "unbanned") msg = "User unbanned successfully";
+    else if (status === "error") { msg = "Action failed"; bg = "#dc3545"; }
+
+    if (msg !== "") {
+        const toast = document.createElement("div");
+        toast.textContent = msg;
+        toast.style.position = "fixed";
+        toast.style.bottom = "20px";
+        toast.style.right = "20px";
+        toast.style.background = bg;
+        toast.style.color = "#fff";
+        toast.style.padding = "12px 20px";
+        toast.style.borderRadius = "8px";
+        toast.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+        toast.style.zIndex = "9999";
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+    }
+</script>
+<?php endif; ?>
+
+
+
 
 
 

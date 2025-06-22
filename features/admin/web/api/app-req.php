@@ -145,7 +145,7 @@ $showPagination = $totalRow['total'] > 10;
                 </svg>
             </button>
             <!--Notification and Profile Admin-->
-             <h3 class="head">Booking Request</h3>
+             <h3 class="head">Booking Pending</h3>
             <div class="profile-admin">
                 <div class="dropdown">
                     <button class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">

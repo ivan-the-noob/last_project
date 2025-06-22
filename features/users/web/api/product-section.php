@@ -8,6 +8,7 @@ if (isset($_SESSION['email'])) {
     header("Location: ../../web/api/login.php");
     exit();
 }
+require '../../../../db.php';
 if ($email) {
     $stmt = $conn->prepare("SELECT profile_picture FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
@@ -21,7 +22,7 @@ if ($email) {
     $stmt->close();
 }
 
-require '../../../../db.php';
+
 
 // Pagination parameters
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

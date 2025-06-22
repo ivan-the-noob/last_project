@@ -173,7 +173,13 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                             });
                         });
                     </script>
-                                    
+                    <form method="GET" action="../../function/php/export.php" class=" d-flex gap-2 w-25 form-inline mb-3" style="margin-left: 3%">
+                    <label class="mr-2">From:</label>
+                    <input type="date" name="start_date" class="form-control mr-2" required>
+                    <label class="mr-2">To:</label>
+                    <input type="date" name="end_date" class="form-control mr-2" required>
+                    <button type="submit" class="btn btn-success w-100">Export</button>
+                </form>   
                     <button type="button" class="btn-new mb-3" data-toggle="modal" data-target="#addProductModal">
                         Add New Product
                     </button>
@@ -184,6 +190,8 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
             <?php
 
                 require '../../../../db.php';
+
+                $addedProduct = null;
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["product_img"])) {
                     $productName = $_POST['product_name'];
@@ -201,13 +209,13 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                                 VALUES ('$imageName', '$productName', '$description', '$cost', '$type', '$quantity')";
 
                         if ($conn->query($sql) === TRUE) {
-
                             // Add notification
                             $notifMessage = "New product has been arrived! Check it now!";
                             $notifSql = "INSERT INTO notification (message) VALUES ('$notifMessage')";
                             $conn->query($notifSql);
 
-                            echo "New product added successfully!";
+                            // ✅ Set the product name for the toast
+                            $addedProduct = $productName;
                         } else {
                             echo "Error: " . $sql . "<br>" . $conn->error;
                         }
@@ -215,6 +223,7 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                         echo "Sorry, there was an error uploading your file.";
                     }
                 }
+
 
                 $perPage = 5; // Number of records per page
                 $page = isset($_GET['page']) ? $_GET['page'] : 1; // Get the current page from the URL, default to 1
@@ -230,6 +239,29 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                 $products = $conn->query($sql);
 
             ?>
+
+            <?php if (!empty($addedProduct)): ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const toast = document.createElement('div');
+                        toast.textContent = 'Product "<?= htmlspecialchars($addedProduct) ?>" has been added';
+                        toast.style.position = 'fixed';
+                        toast.style.bottom = '120px';
+                        toast.style.right = '20px';
+                        toast.style.background = '#007bff';
+                        toast.style.color = 'white';
+                        toast.style.padding = '12px 20px';
+                        toast.style.borderRadius = '8px';
+                        toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+                        toast.style.zIndex = '9999';
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.remove(), 4000);
+                    });
+                </script>
+                <?php endif; ?>
+
+                
+
 
 
             <!--Category List Modal (add new)-->
@@ -597,34 +629,77 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                                     aria-labelledby="editProductModalLabel<?= $product['id'] ?>" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
-                                            <form action="../../function/php/update_product.php" method="POST"
-                                                enctype="multipart/form-data">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editProductModalLabel<?= $product['id'] ?>">Edit
-                                                        Product
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <input type="hidden" name="id" value="<?= $product['id'] ?>">
-                                                   
-                                                    <div class="form-group">
-                                                        <label for="quantity">Quantity</label>
-                                                        <input type="number" class="form-control" id="quantity" name="quantity"
-                                                            value="<?= htmlspecialchars($product['quantity']) ?>" required>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form>
+                                            <form action="" method="POST" enctype="multipart/form-data">
+                            <div class="modal-header d-flex justify-content-between">
+                                <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="product_img">Image</label>
+                                    <input type="file" class="form-control-file" id="product_img" name="product_img"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product_name">Name</label>
+                                    <input type="text" class="form-control" id="product_name" name="product_name"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="2"
+                                        required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cost">Price</label>
+                                    <input type="number" class="form-control" id="cost" name="cost" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <select class="form-control" id="type" name="type" required>
+                                        <option value="petfood">Pet Food</option>
+                                        <option value="pettoys">Pet Toys</option>
+                                        <option value="supplements">Supplements</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
                                         </div>
                                     </div>
                                 </div>
+                                <?php
+                                if (isset($_GET['updated'])) {
+                                    $updatedProduct = htmlspecialchars($_GET['updated']);
+                                    echo "<script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            const toast = document.createElement('div');
+                                            toast.textContent = 'Product \"$updatedProduct\" has been updated';
+                                            toast.style.position = 'fixed';
+                                            toast.style.bottom = '70px';
+                                            toast.style.right = '20px';
+                                           toast.style.background = '#ffc107';
+                                            toast.style.color = 'white';
+                                            toast.style.padding = '12px 20px';
+                                            toast.style.borderRadius = '8px';
+                                            toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+                                            toast.style.zIndex = '9999';
+                                            document.body.appendChild(toast);
+                                            setTimeout(() => toast.remove(), 4000);
+                                        });
+                                    </script>";
+                                }
+                                ?>
+
                                 <button class="btn btn-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal<?= $product['id'] ?>">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
@@ -652,6 +727,29 @@ if (!isset($_SESSION['email']) || !isset($_SESSION['role']) || $_SESSION['role']
                                         </div>
                                     </div>
                                 </div>
+                                <?php
+                            if (isset($_GET['deleted'])) {
+                                $deletedProduct = htmlspecialchars($_GET['deleted']);
+                                echo "<script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const toast = document.createElement('div');
+                                        toast.textContent = 'Product \"$deletedProduct\" has been deleted';
+                                        toast.style.position = 'fixed';
+                                        toast.style.bottom = '20px';
+                                        toast.style.right = '20px';
+                                        toast.style.background = '#dc3545';
+                                        toast.style.color = 'white';
+                                        toast.style.padding = '12px 20px';
+                                        toast.style.borderRadius = '8px';
+                                        toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+                                        toast.style.zIndex = '9999';
+                                        document.body.appendChild(toast);
+                                        setTimeout(() => toast.remove(), 4000);
+                                    });
+                                </script>";
+                            }
+                            ?>
+
                                 
                             </div>
                         </div>
